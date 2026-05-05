@@ -355,6 +355,9 @@ local function loadRegistry(path, registry, recurse, definitions)
          local item = require(requireName)
 
          if not registry.manualRegistration then
+            if not prism.Object:is(item) then
+               error(requireName .. " does not return a factory!")
+            end
             prism.register(item, true)
             local objectName = item.className
             prism.writeDefinitions(
