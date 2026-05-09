@@ -1,4 +1,5 @@
---- A conditional node in the behavior tree.
+--- Evaluates a condition function.
+--- Returns true if the condition passes, otherwise false.
 --- @class BehaviorTree.Conditional : BehaviorTree.Node
 --- @overload fun(conditionFunc: fun(self: BehaviorTree.Conditional, level: Level, actor: Actor)): BehaviorTree.Conditional
 local BTConditional = prism.BehaviorTree.Node:extend("BehaviorTree.Conditional")

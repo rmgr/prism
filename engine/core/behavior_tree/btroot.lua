@@ -1,4 +1,5 @@
---- The root node of a behavior tree.
+--- The entry point of a behavior tree. It evaluates its children in order and returns
+--- the first action it encounters.
 --- @class BehaviorTree.Root : BehaviorTree.Node
 --- @overload fun(children: BehaviorTree.Node[]): BehaviorTree.Root
 local BTRoot = prism.BehaviorTree.Node:extend("BehaviorTree.Root")

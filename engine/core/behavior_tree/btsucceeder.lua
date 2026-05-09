@@ -1,4 +1,5 @@
---- A succeeder node in the behavior tree.
+--- Always reports success, no matter what its child returns.
+--- Handy when you want to ignore failure and keep things moving.
 --- @class BehaviorTree.Succeeder : BehaviorTree.Node
 --- @overload fun(node: BehaviorTree.Node): BehaviorTree.Succeeder
 local BTSucceeder = prism.BehaviorTree.Node:extend("BehaviorTree.Succeeder")

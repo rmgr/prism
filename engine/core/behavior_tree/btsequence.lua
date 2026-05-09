@@ -1,4 +1,6 @@
---- A sequence node in the behavior tree.
+--- Executes each child in order. If every child succeeds, the sequence succeeds. If any
+--- child fails, the sequence fails. If a child returns an ``Action``, execution pauses and
+--- that action is returned immediately.
 --- @class BehaviorTree.Sequence : BehaviorTree.Node
 --- @overload fun(children: BehaviorTree.Node[]): BehaviorTree.Sequence
 local BTSequence = prism.BehaviorTree.Node:extend("BehaviorTree.Sequence")
