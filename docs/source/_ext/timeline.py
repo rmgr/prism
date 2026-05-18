@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from docutils import nodes
 from docutils.nodes import Element, section, title
+from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective, SphinxRole
 from sphinx.util.typing import ExtensionMetadata
@@ -22,9 +23,13 @@ class header_node(Element):
 
 class TimelineDirective(SphinxDirective):
     has_content = True
+    option_spec = { 'no-padding': directives.flag }
 
     def run(self) -> list[nodes.Node]:
         container = timeline_node()
+        container["classes"] = []
+        if 'no-padding' in self.options:
+            container["classes"].append("no-padding")
         self.state.nested_parse(self.content, self.content_offset, container)
         return [container]
 
@@ -33,16 +38,19 @@ class TimelineCardDirective(SphinxDirective):
     """A directive to say hello!"""
 
     required_arguments = 1
+    option_spec = { 'released': directives.flag }
     has_content = True
 
     def run(self) -> list[nodes.Node]:
         container = card_node()
         container["classes"] = ["terminal-card"]
+        if 'released' in self.options:
+            container["classes"].append("released")
         container["ids"].append(nodes.make_id(self.arguments[0]))
 
         # Header element (<header>)
         header = header_node()
-        header.append(nodes.Text(self.arguments[0]))
+        header.append(nodes.Text("".join(self.arguments)))
         container += header
 
         # Content div
@@ -69,7 +77,7 @@ class PromoteTimelineSections(SphinxTransform):
 
 
 def visit_card_node_html(self, node):
-    self.body.append('<section class="terminal-card">')
+    self.body.append('<section class="terminal-card {}">'.format('released' if 'released' in node["classes"] else ''))
 
 
 def depart_card_node_html(self, node):
@@ -77,7 +85,7 @@ def depart_card_node_html(self, node):
 
 
 def visit_timeline_node_html(self, node):
-    self.body.append('<div class="terminal-timeline">')
+    self.body.append('<div class="terminal-timeline {}">'.format('no-padding' if 'no-padding' in node["classes"] else ''))
 
 
 def depart_timeline_node_html(self, node):
