@@ -57,6 +57,7 @@ html_sidebars = {
 html_theme_options = {
     "github_user": "prismrl",
     "github_repo": "prism",
+    "github_type": "star",
     "logo": "prism.png",
     "sidebar_width": "300px",
     "page_width": "1000px",
